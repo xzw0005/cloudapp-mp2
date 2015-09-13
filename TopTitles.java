@@ -1,14 +1,9 @@
-hadoop jar TopTitles.jar TopTitles -D
-stopwords=/mp2/misc/stopwords.txt -D delimiters=/mp2/misc/delimiters.txt
--D N=5 /mp2/titles /mp2/B-output
-
-hadoop jar TopTitles.jar TopTitles -D
-stopwords=/mp2/misc/stopwords.txt -D delimiters=/mp2/misc/delimiters.txt
--D N=5 /mp2/titles /mp2/B-output
-
-
-hadoop jar TitleCount.jar TitleCount -D 
-stopwords=/mp2/misc/stopwords.txt -D delimiters=/mp2/misc/delimiters.txt /mp2/titles /mp2/A-output 
+/*
+mkdir build
+export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
+jar -cvf TopTitles.jav -C build/ ./
+hadoop jar TopTitles.jar TopTitles -D stopwords=/mp2/misc/stopwords.txt -D delimiters=/mp2/misc/delimiters.txt /mp2/titles /mp2/B-output 
+*/
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
