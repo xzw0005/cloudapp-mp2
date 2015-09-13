@@ -220,7 +220,7 @@ public class TopTitles extends Configured implements Tool {
                 
                 countToTitleMap.add(new Pair<Integer, String>(count, title));
                 
-                if (countToTitleMap.size > this.N) {
+                if (countToTitleMap.size() > this.N) {
                     countToTitleMap.remove(countToTitleMap.first());
                 }
             }
