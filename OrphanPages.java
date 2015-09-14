@@ -51,16 +51,22 @@ public class OrphanPages extends Configured implements Tool {
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             //TODO
             String line = value.toString();
-            String lineArray = line.split(":");
+            String[] lineArray = line.split(":");
             
             String page = lineArray[0];
             context.write(new IntWritable(Integer.parseInt(page)), new IntWritable(0));
             
-            StringTokenizer tokenizer = new StringTokenizer(lineArray[1], " ");
+            /*StringTokenizer tokenizer = new StringTokenizer(lineArray[1]);
             while (tokenizer.hasMoreTokens()) {
                 String link = tokenizer.nextToken().trim();
                 context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
-            }           
+            } */
+            //StringTokenizer class is deprecated now. 
+            //It is recommended to use split() method of String class or regex (Regular Expression).
+            String[] linkArray = lineArray[1].trim().split(" ");
+            for (String link : linkArray) {
+                context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
+            }
             //END TODO
         }
     }

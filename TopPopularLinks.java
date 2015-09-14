@@ -96,11 +96,17 @@ public class TopPopularLinks extends Configured implements Tool {
         // TODO
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            String line = value.toString().split(":");
+            String[] line = value.toString().split(":");
             String page = line[0];
-            StringTokenizer tokenizer = new StringTokenizer(line[1], " ");
+            /*StringTokenizer tokenizer = new StringTokenizer(line[1]);
             while (tokenizer.hasMoreTokens()) {
                 String link = tokenizer.nextToken().trim();
+                context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
+            }  */
+            //StringTokenizer class is deprecated now. 
+            //It is recommended to use split() method of String class or regex (Regular Expression).
+            String[] linkArray = line[1].trim().split(" ");
+            for (String link : linkArray) {
                 context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
             }           
         }
