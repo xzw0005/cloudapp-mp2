@@ -73,7 +73,7 @@ public class PopularityLeague extends Configured implements Tool {
     }
 
     // TODO
-    public static String readHDFS(String path, Configuration conf) throws IOException {
+    public static String readHDFSFile(String path, Configuration conf) throws IOException {
         Path pt = new Path(path);
         FileSystem fs = FileSystem.get(pt.toUri(), conf);
         FSDataInputStream file = fs.open(pt);

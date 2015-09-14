@@ -79,7 +79,7 @@ public class TopPopularLinks extends Configured implements Tool {
         
         jobB.setMapperClass(TopLinksMap.class);
         jobB.setReducerClass(TopLinksReduce.class);
-        jabB.setNumReduceTasks(1);
+        jobB.setNumReduceTasks(1);
         
         FileInputFormat.setInputPaths(jobB, tmpPath);
         FileOutputFormat.setOutputPath(jobB, new Path(args[1]));
