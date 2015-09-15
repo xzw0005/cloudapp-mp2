@@ -220,25 +220,26 @@ public class TopTitleStatistics extends Configured implements Tool {
                 }
             }
             
-            min = countToTitleMap.first().first;
-            max = countToTitleMap.last().first;
-            //max = new Integer(Integer.MIN_VALUE);
-            //min = new Integer(Integer.MAX_VALUE);
+            //min = countToTitleMap.first().first;
+            //max = countToTitleMap.last().first;
+            max = new Integer(Integer.MIN_VALUE);
+            min = new Integer(Integer.MAX_VALUE);
             sum = new Integer(0);
             for (Pair<Integer, String> item: countToTitleMap) {
                 sum += item.first;
-                /*if (item.first < min)
+                if (item.first < min)
                     min = item.first;
                 if (item.first > max)
-                    max = item.first;*/
+                    max = item.first;
             }
-            mean = sum / this.N;
+            mean = sum / countToTitleMap.size();
+			this.N;
             
             var = new Integer(0);
             for (Pair<Integer, String> item: countToTitleMap) {
                 var += (item.first - mean) * (item.first - mean);
             }
-            var = var / this.N;
+            var = var / countToTitleMap.size();
             // END TODO
 
             context.write(new Text("Mean"), new IntWritable(mean));

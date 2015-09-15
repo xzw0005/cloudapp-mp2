@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class PopularityLeague extends Configured implements Tool {
+//public class PopularityLeague extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         int res = ToolRunner.run(new Configuration(), new PopularityLeague(), args);
@@ -104,6 +104,16 @@ public class PopularityLeague extends Configured implements Tool {
     }
     
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
+		List<String> leagueList;
+		
+		@Override
+        protected void setup(Context context) throws IOException, InterruptedException {
+            Configuration conf = context.getConfiguration();
+            String leaguePath = conf.get("league");
+            this.leagueList = Arrays.asList(readHDFSFile(leaguePath, conf).split("\n"));
+        }
+        
+		
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] line = value.toString().split(":");
@@ -117,7 +127,8 @@ public class PopularityLeague extends Configured implements Tool {
             //It is recommended to use split() method of String class or regex (Regular Expression).
 			String[] linkArray = line[1].trim().split(" ");
 			for (String link : linkArray) {
-				context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
+				if (leagueList.contains(link)) 
+					context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
 			}
         }
     }
@@ -135,14 +146,14 @@ public class PopularityLeague extends Configured implements Tool {
     
     public static class PopularityLeagueMap extends Mapper<Text, Text, NullWritable, IntArrayWritable> {
         List<String> leagueList;
+		Integer N;
         
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
-            
             String leaguePath = conf.get("league");
-            
             this.leagueList = Arrays.asList(readHDFSFile(leaguePath, conf).split("\n"));
+			this.N = conf.getInt("N", 10);
         }
         
         private TreeSet<Pair<Integer, Integer>> countToLinkMap = new TreeSet<Pair<Integer, Integer>>();
@@ -152,9 +163,12 @@ public class PopularityLeague extends Configured implements Tool {
             Integer count = Integer.parseInt(value.toString());
             Integer link = Integer.parseInt(key.toString());
             
-            if (this.leagueList.contains(link.toString())) {
-                countToLinkMap.add(new Pair<Integer, Integer>(count, link));
-            }
+            //if (this.leagueList.contains(link.toString())) 
+            countToLinkMap.add(new Pair<Integer, Integer>(count, link));
+		
+			if (countToLinkMap.size() > this.N) {
+				countToLinkMap.remove(countToLinkMap.first());
+			}
         }
         
         @Override
