@@ -174,10 +174,13 @@ public class TopPopularLinks extends Configured implements Tool {
         @Override
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             for (IntArrayWritable val : values) {
-                Integer[] pair = (Integer[]) val.toArray();
+                //Integer[] pair = (Integer[]) val.toArray();  // Error: java.lang.ClassCastException: [Lorg.apache.hadoop.io.IntWritable; cannot be cast to [Ljava.lang.Integer;
+                IntWritable[] pair = (IntWritable[]) val.toArray();
                 
-                Integer link = Integer.parseInt(pair[0].toString());
-                Integer count = Integer.parseInt(pair[1].toString());
+                //Integer link = Integer.parseInt(pair[0].toString());
+                //Integer count = Integer.parseInt(pair[1].toString());
+                Integer link = pair[0].get();
+                Integer count = pair[1].get();
                 
                 countToLinkMap.add(new Pair<Integer, Integer>(count, link));
                 

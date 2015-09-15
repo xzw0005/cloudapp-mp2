@@ -233,7 +233,6 @@ public class TopTitleStatistics extends Configured implements Tool {
                     max = item.first;
             }
             mean = sum / countToTitleMap.size();
-			this.N;
             
             var = new Integer(0);
             for (Pair<Integer, String> item: countToTitleMap) {
