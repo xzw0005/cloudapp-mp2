@@ -56,8 +56,8 @@ public class OrphanPages extends Configured implements Tool {
             String page = lineArray[0];
             context.write(new IntWritable(Integer.parseInt(page)), new IntWritable(0));
             
-            /*StringTokenizer tokenizer = new StringTokenizer(lineArray[1]);
-            while (tokenizer.hasMoreTokens()) {
+            StringTokenizer tokenizer = new StringTokenizer(lineArray[1]);
+            /*while (tokenizer.hasMoreTokens()) {
                 String link = tokenizer.nextToken().trim();
                 context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
             } */
@@ -66,7 +66,7 @@ public class OrphanPages extends Configured implements Tool {
             String[] linkArray = lineArray[1].trim().split(" ");
             for (String link : linkArray) {
                 context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
-            }
+            } 
             //END TODO
         }
     }

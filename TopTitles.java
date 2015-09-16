@@ -35,7 +35,7 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 // >>> Don't Change
-public class TopTitles extends Configured implements Tool {
+//public class TopTitles extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         int res = ToolRunner.run(new Configuration(), new TopTitles(), args);

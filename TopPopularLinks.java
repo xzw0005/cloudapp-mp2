@@ -98,6 +98,7 @@ public class TopPopularLinks extends Configured implements Tool {
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] line = value.toString().split(":");
             String page = line[0];
+			context.write(new IntArrayWritable(Integer.parseInt(page)), new IntWritable(0));
             /*StringTokenizer tokenizer = new StringTokenizer(line[1]);
             while (tokenizer.hasMoreTokens()) {
                 String link = tokenizer.nextToken().trim();
@@ -108,7 +109,7 @@ public class TopPopularLinks extends Configured implements Tool {
             String[] linkArray = line[1].trim().split(" ");
             for (String link : linkArray) {
                 context.write(new IntWritable(Integer.parseInt(link)), new IntWritable(1));
-            }           
+            }   
         }
         // END TODO
     }

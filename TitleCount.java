@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 // >>> Don't Change
-public class TitleCount extends Configured implements Tool {
+//public class TitleCount extends Configured implements Tool {
     public static void main(String[] args) throws Exception {
         int res = ToolRunner.run(new Configuration(), new TitleCount(), args);
         System.exit(res);
